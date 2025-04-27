@@ -1,0 +1,23 @@
+package com.okancezik.repository.entity;
+
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Product {
+	private UUID id;
+	private String name;
+	private String description;
+	private double price;
+	private int stock;
+	@ManyToOne
+	@JoinColumn(name = "category_id", nullable = false, referencedColumnName = "id")
+	private Category category;
+}
