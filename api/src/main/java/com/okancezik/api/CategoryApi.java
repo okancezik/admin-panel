@@ -36,4 +36,11 @@ public class CategoryApi {
 		return ResponseEntity.ok(categoryService.findAll());
 	}
 
+	@DeleteMapping
+	public ResponseEntity<CategoryResponseDto> delete(
+			@RequestBody CategoryUpdateRequestDto request){
+		categoryService.delete(request);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+
 }
