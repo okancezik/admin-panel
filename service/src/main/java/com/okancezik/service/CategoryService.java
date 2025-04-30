@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface CategoryService {
 	void save(CategoryCreateRequestDto request);
 
-	void update(CategoryUpdateRequestDto request);
+	boolean update(CategoryUpdateRequestDto request);
 
 	void delete(UUID id);
 

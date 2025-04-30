@@ -6,13 +6,11 @@ import com.okancezik.core.dto.category.CategoryUpdateRequestDto;
 import com.okancezik.core.dto.product.ProductResponseDto;
 import com.okancezik.repository.data.CategoryRepository;
 import com.okancezik.repository.entity.Category;
-import com.okancezik.repository.entity.Product;
 import com.okancezik.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -32,22 +30,15 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void update(CategoryUpdateRequestDto request) {
-		var category = Category.builder()
-				.id(request.id())
-				.name(request.name())
-				.description(request.description())
-				.build();
-		var productList = request.productList().stream().map(p-> Product.builder()
-				.id(p.id())
-				.name(p.name())
-				.description(p.description())
-				.stock(p.stock())
-				.price(p.price())
-				.category(category)
-				.build()).toList();
-		category.setProductList(productList);
-		categoryRepository.save(category);
+	public boolean update(CategoryUpdateRequestDto request) {
+		return categoryRepository.findById(request.id())
+				.map(category -> {
+					category.setName(request.name());
+					category.setDescription(request.description());
+					categoryRepository.save(category);
+					return true;
+				})
+				.orElse(false);
 	}
 
 	@Override
@@ -57,46 +48,44 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public CategoryResponseDto findById(UUID id) {
-		Optional<Category> category = categoryRepository.findById(id);
-		if (category.isPresent()) {
-			var categoryExist = category.get();
-			return CategoryResponseDto.builder()
-					.id(categoryExist.getId())
-					.name(categoryExist.getName())
-					.description(categoryExist.getDescription())
-					.productList(categoryExist.getProductList().stream().map(
-							p->ProductResponseDto.builder()
-									.id(p.getId())
-									.name(p.getName())
-									.description(p.getDescription())
-									.stock(p.getStock())
-									.price(p.getPrice())
-									.build()).toList())
-					.build();
-		}
-		return null;
+		return categoryRepository.findById(id)
+				.map(category -> CategoryResponseDto.builder()
+						.id(category.getId())
+						.name(category.getName())
+						.description(category.getDescription())
+						.productList(category.getProductList().stream()
+								.map(p -> ProductResponseDto.builder()
+										.id(p.getId())
+										.name(p.getName())
+										.description(p.getDescription())
+										.stock(p.getStock())
+										.price(p.getPrice())
+										.build())
+								.toList())
+						.build())
+				.orElse(null);
 	}
 
 	@Override
 	public List<CategoryResponseDto> findAll() {
 		var categories = categoryRepository.findAll();
 		return categories.stream().map(category ->
-			CategoryResponseDto.builder()
-					.id(category.getId())
-					.name(category.getName())
-					.description(category.getDescription())
-					.productList(
-							category.getProductList().stream().map(product ->
-									ProductResponseDto.builder()
-											.id(product.getId())
-											.name(product.getName())
-											.description(product.getDescription())
-											.stock(product.getStock())
-											.price(product.getPrice())
-											.build()
-							).toList()
-					)
-					.build()
+				CategoryResponseDto.builder()
+						.id(category.getId())
+						.name(category.getName())
+						.description(category.getDescription())
+						.productList(
+								category.getProductList().stream().map(product ->
+										ProductResponseDto.builder()
+												.id(product.getId())
+												.name(product.getName())
+												.description(product.getDescription())
+												.stock(product.getStock())
+												.price(product.getPrice())
+												.build()
+								).toList()
+						)
+						.build()
 		).toList();
 	}
 }
