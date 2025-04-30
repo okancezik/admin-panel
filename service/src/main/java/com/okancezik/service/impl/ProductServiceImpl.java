@@ -1,13 +1,13 @@
 package com.okancezik.service.impl;
 
 import com.okancezik.core.dto.product.ProductCreateRequest;
-import com.okancezik.core.dto.product.ProductResponseDto;
+import com.okancezik.core.dto.product.ProductResponse;
 import com.okancezik.core.dto.product.ProductUpdateRequest;
 import com.okancezik.repository.data.ProductRepository;
 import com.okancezik.repository.entity.Category;
-import com.okancezik.repository.entity.Product;
 import com.okancezik.service.CategoryService;
 import com.okancezik.service.ProductService;
+import com.okancezik.service.util.MappingProduct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,22 +30,8 @@ public class ProductServiceImpl implements ProductService {
 				.id(categoryResponse.id())
 				.name(categoryResponse.name())
 				.description(categoryResponse.description())
-				.productList(categoryResponse.productList().stream().map(p -> Product.builder()
-						.id(p.id())
-						.name(p.name())
-						.description(p.description())
-						.stock(p.stock())
-						.price(p.price())
-						.build()).toList())
 				.build();
-		var product = Product.builder()
-				.id(UUID.randomUUID())
-				.name(request.name())
-				.description(request.description())
-				.price(request.price())
-				.stock(request.stock())
-				.category(category)
-				.build();
+		var product = MappingProduct.toProduct(request, category);
 		productRepository.save(product);
 	}
 
@@ -76,14 +62,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductResponseDto> findAll() {
+	public List<ProductResponse> findAll() {
 		var products = productRepository.findAll();
-		return products.stream().map(product -> ProductResponseDto.builder()
-				.id(product.getId())
-				.name(product.getName())
-				.description(product.getDescription())
-				.price(product.getPrice())
-				.stock(product.getStock())
-				.build()).toList();
+		return products.stream().map(MappingProduct::toProductResponse).toList();
 	}
 }

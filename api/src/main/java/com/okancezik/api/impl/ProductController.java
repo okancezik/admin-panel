@@ -2,7 +2,7 @@ package com.okancezik.api.impl;
 
 import com.okancezik.api.ProductApi;
 import com.okancezik.core.dto.product.ProductCreateRequest;
-import com.okancezik.core.dto.product.ProductResponseDto;
+import com.okancezik.core.dto.product.ProductResponse;
 import com.okancezik.core.dto.product.ProductUpdateRequest;
 import com.okancezik.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -21,25 +21,25 @@ public class ProductController implements ProductApi {
 	private final ProductService productService;
 
 	@Override
-	public ResponseEntity<ProductResponseDto> save(ProductCreateRequest request) {
+	public ResponseEntity<ProductResponse> save(ProductCreateRequest request) {
 		productService.save(request);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@Override
-	public ResponseEntity<ProductResponseDto> update(ProductUpdateRequest request) {
+	public ResponseEntity<ProductResponse> update(ProductUpdateRequest request) {
 		productService.update(request);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@Override
-	public ResponseEntity<ProductResponseDto> delete(UUID id) {
+	public ResponseEntity<ProductResponse> delete(UUID id) {
 		productService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@Override
-	public ResponseEntity<List<ProductResponseDto>> getAll() {
+	public ResponseEntity<List<ProductResponse>> getAll() {
 		return ResponseEntity.ok(productService.findAll());
 	}
 }

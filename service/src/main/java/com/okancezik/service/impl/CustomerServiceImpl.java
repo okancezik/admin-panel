@@ -6,6 +6,7 @@ import com.okancezik.core.dto.customer.CustomerUpdateRequest;
 import com.okancezik.repository.data.CustomerRepository;
 import com.okancezik.repository.entity.Customer;
 import com.okancezik.service.CustomerService;
+import com.okancezik.service.util.MappingCustomer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,34 +18,31 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 	private final CustomerRepository customerRepository;
+
 	@Override
 	public void save(CustomerCreateRequest request) {
-		var customer = Customer.builder()
-				.id(UUID.randomUUID())
-				.firstname(request.firstname())
-				.lastname(request.lastname())
-				.email(request.email())
-				.phone(request.phone())
-				.address(request.address())
-				.build();
+		var customer = MappingCustomer.toCustomer(request);
 		customerRepository.save(customer);
 	}
 
 	@Override
-	public void update(CustomerUpdateRequest request) {
+	public boolean update(CustomerUpdateRequest request) {
+		return customerRepository.findById(request.id()).map(customer -> {
+			customer.setFirstname(request.firstname());
+			customer.setLastname(request.lastname());
+			customer.setEmail(request.email());
+			customer.setPhone(request.phone());
+			customer.setAddress(request.address());
+			customerRepository.save(customer);
+			return true;
+		}).orElse(false);
 	}
 
 	@Override
 	public List<CustomerResponse> findAll() {
-		var customers = customerRepository.findAll();
-		return customers.stream().map(c -> CustomerResponse.builder()
-				.id(c.getId())
-				.firstname(c.getFirstname())
-				.lastname(c.getLastname())
-				.email(c.getEmail())
-				.phone(c.getPhone())
-				.address(c.getAddress())
-				.build()).toList();
+		return customerRepository.findAll().stream().map(
+				MappingCustomer::toCustomerResponse
+		).toList();
 	}
 
 	@Override

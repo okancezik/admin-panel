@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface CustomerService {
 	void save(CustomerCreateRequest request);
 
-	void update(CustomerUpdateRequest request);
+	boolean update(CustomerUpdateRequest request);
 
 	void delete(UUID id);
 

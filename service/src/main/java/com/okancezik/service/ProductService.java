@@ -1,7 +1,7 @@
 package com.okancezik.service;
 
 import com.okancezik.core.dto.product.ProductCreateRequest;
-import com.okancezik.core.dto.product.ProductResponseDto;
+import com.okancezik.core.dto.product.ProductResponse;
 import com.okancezik.core.dto.product.ProductUpdateRequest;
 
 import java.util.List;
@@ -14,5 +14,5 @@ public interface ProductService {
 
 	void delete(UUID id);
 
-	List<ProductResponseDto> findAll();
+	List<ProductResponse> findAll();
 }

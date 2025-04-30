@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.util.UUID;
 
 @Builder
-public record ProductResponseDto(
+public record ProductResponse(
 		UUID id,
 		String name,
 		String description,

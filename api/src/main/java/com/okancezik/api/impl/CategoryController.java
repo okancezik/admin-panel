@@ -1,9 +1,9 @@
 package com.okancezik.api.impl;
 
 import com.okancezik.api.CategoryApi;
-import com.okancezik.core.dto.category.CategoryCreateRequestDto;
-import com.okancezik.core.dto.category.CategoryResponseDto;
-import com.okancezik.core.dto.category.CategoryUpdateRequestDto;
+import com.okancezik.core.dto.category.CategoryCreateRequest;
+import com.okancezik.core.dto.category.CategoryResponse;
+import com.okancezik.core.dto.category.CategoryUpdateRequest;
 import com.okancezik.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,24 +21,24 @@ public class CategoryController implements CategoryApi {
 	private final CategoryService categoryService;
 
 	@Override
-	public ResponseEntity<CategoryResponseDto> save(CategoryCreateRequestDto request) {
+	public ResponseEntity<CategoryResponse> save(CategoryCreateRequest request) {
 		categoryService.save(request);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@Override
-	public ResponseEntity<CategoryResponseDto> update(CategoryUpdateRequestDto request) {
+	public ResponseEntity<CategoryResponse> update(CategoryUpdateRequest request) {
 		categoryService.update(request);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@Override
-	public ResponseEntity<List<CategoryResponseDto>> getAll() {
+	public ResponseEntity<List<CategoryResponse>> getAll() {
 		return ResponseEntity.ok(categoryService.findAll());
 	}
 
 	@Override
-	public ResponseEntity<CategoryResponseDto> delete(UUID id){
+	public ResponseEntity<CategoryResponse> delete(UUID id){
 		categoryService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}

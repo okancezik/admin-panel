@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 import java.util.UUID;
 
-public record CategoryUpdateRequestDto(
+public record CategoryUpdateRequest(
 		@NotNull(message = "ID must not be null")
 		UUID id,
 		@NotBlank(message = "Name must not be blank")

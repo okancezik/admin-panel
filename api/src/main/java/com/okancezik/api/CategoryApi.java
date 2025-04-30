@@ -1,8 +1,8 @@
 package com.okancezik.api;
 
-import com.okancezik.core.dto.category.CategoryCreateRequestDto;
-import com.okancezik.core.dto.category.CategoryResponseDto;
-import com.okancezik.core.dto.category.CategoryUpdateRequestDto;
+import com.okancezik.core.dto.category.CategoryCreateRequest;
+import com.okancezik.core.dto.category.CategoryResponse;
+import com.okancezik.core.dto.category.CategoryUpdateRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,17 +18,17 @@ import java.util.UUID;
 public interface CategoryApi {
 
 	@PostMapping
-	ResponseEntity<CategoryResponseDto> save(
-			@RequestBody @Valid CategoryCreateRequestDto request);
+	ResponseEntity<CategoryResponse> save(
+			@RequestBody @Valid CategoryCreateRequest request);
 
 	@PutMapping
-	ResponseEntity<CategoryResponseDto> update(
-			@RequestBody @Valid CategoryUpdateRequestDto request);
+	ResponseEntity<CategoryResponse> update(
+			@RequestBody @Valid CategoryUpdateRequest request);
 
 	@GetMapping
-	ResponseEntity<List<CategoryResponseDto>> getAll();
+	ResponseEntity<List<CategoryResponse>> getAll();
 
 	@DeleteMapping("/{id}")
-	ResponseEntity<CategoryResponseDto> delete(
+	ResponseEntity<CategoryResponse> delete(
 			@PathVariable UUID id);
 }
