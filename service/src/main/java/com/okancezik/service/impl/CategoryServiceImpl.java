@@ -51,14 +51,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void delete(CategoryUpdateRequestDto request) {
-		var category = Category.builder()
-				.id(request.id())
-				.name(request.name())
-				.description(request.description())
-				.productList(List.of())
-				.build();
-		categoryRepository.delete(category);
+	public void delete(UUID id) {
+		categoryRepository.deleteById(id);
 	}
 
 	@Override

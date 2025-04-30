@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/category")
@@ -37,8 +38,8 @@ public class CategoryController implements CategoryApi {
 	}
 
 	@Override
-	public ResponseEntity<CategoryResponseDto> delete(CategoryUpdateRequestDto request){
-		categoryService.delete(request);
+	public ResponseEntity<CategoryResponseDto> delete(UUID id){
+		categoryService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 

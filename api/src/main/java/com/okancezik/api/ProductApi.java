@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ProductApi {
 	@PostMapping
@@ -24,7 +26,7 @@ public interface ProductApi {
 
 	@DeleteMapping
 	ResponseEntity<ProductResponseDto> delete(
-			@RequestBody ProductUpdateRequest request
+			@PathVariable UUID id
 	);
 
 	@GetMapping

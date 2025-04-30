@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/product")
@@ -32,8 +33,8 @@ public class ProductController implements ProductApi {
 	}
 
 	@Override
-	public ResponseEntity<ProductResponseDto> delete(ProductUpdateRequest request) {
-		productService.delete(request);
+	public ResponseEntity<ProductResponseDto> delete(UUID id) {
+		productService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 

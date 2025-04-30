@@ -71,10 +71,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void delete(ProductUpdateRequest request) {
-		var existingProduct = productRepository.findById(request.id())
-				.orElseThrow(() -> new RuntimeException("Product not found"));
-		productRepository.delete(existingProduct);
+	public void delete(UUID id) {
+		productRepository.deleteById(id);
 	}
 
 	@Override
