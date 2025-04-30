@@ -1,14 +1,32 @@
 package com.okancezik.api;
 
-import com.okancezik.service.ProductService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.okancezik.core.dto.product.ProductCreateRequest;
+import com.okancezik.core.dto.product.ProductResponseDto;
+import com.okancezik.core.dto.product.ProductUpdateRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
-@RequestMapping("/api/v1/product")
-@RequiredArgsConstructor
-public class ProductApi {
-	private final ProductService productService;
+import java.util.List;
 
+public interface ProductApi {
+	@PostMapping
+	ResponseEntity<ProductResponseDto> save(
+			@RequestBody ProductCreateRequest request);
+
+	@PutMapping
+	ResponseEntity<ProductResponseDto> update(
+			@RequestBody ProductUpdateRequest request
+	);
+
+	@DeleteMapping
+	ResponseEntity<ProductResponseDto> delete(
+			@RequestBody ProductUpdateRequest request
+	);
+
+	@GetMapping
+	ResponseEntity<List<ProductResponseDto>> getAll();
 }

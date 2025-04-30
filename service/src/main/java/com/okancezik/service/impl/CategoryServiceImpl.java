@@ -6,11 +6,13 @@ import com.okancezik.core.dto.category.CategoryUpdateRequestDto;
 import com.okancezik.core.dto.product.ProductResponseDto;
 import com.okancezik.repository.data.CategoryRepository;
 import com.okancezik.repository.entity.Category;
+import com.okancezik.repository.entity.Product;
 import com.okancezik.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -35,8 +37,16 @@ public class CategoryServiceImpl implements CategoryService {
 				.id(request.id())
 				.name(request.name())
 				.description(request.description())
-				.productList(List.of())//TO DO impl
 				.build();
+		var productList = request.productList().stream().map(p-> Product.builder()
+				.id(p.id())
+				.name(p.name())
+				.description(p.description())
+				.stock(p.stock())
+				.price(p.price())
+				.category(category)
+				.build()).toList();
+		category.setProductList(productList);
 		categoryRepository.save(category);
 	}
 
@@ -53,6 +63,23 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public CategoryResponseDto findById(UUID id) {
+		Optional<Category> category = categoryRepository.findById(id);
+		if (category.isPresent()) {
+			var categoryExist = category.get();
+			return CategoryResponseDto.builder()
+					.id(categoryExist.getId())
+					.name(categoryExist.getName())
+					.description(categoryExist.getDescription())
+					.productList(categoryExist.getProductList().stream().map(
+							p->ProductResponseDto.builder()
+									.id(p.getId())
+									.name(p.getName())
+									.description(p.getDescription())
+									.stock(p.getStock())
+									.price(p.getPrice())
+									.build()).toList())
+					.build();
+		}
 		return null;
 	}
 
