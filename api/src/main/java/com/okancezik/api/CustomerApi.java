@@ -3,6 +3,7 @@ package com.okancezik.api;
 import com.okancezik.core.dto.customer.CustomerCreateRequest;
 import com.okancezik.core.dto.customer.CustomerResponse;
 import com.okancezik.core.dto.customer.CustomerUpdateRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ import java.util.UUID;
 public interface CustomerApi {
 	@PostMapping
 	ResponseEntity<CustomerResponse> save(
-			@RequestBody CustomerCreateRequest request);
+			@RequestBody @Valid CustomerCreateRequest request);
 
 	@PutMapping
 	ResponseEntity<CustomerResponse> update(

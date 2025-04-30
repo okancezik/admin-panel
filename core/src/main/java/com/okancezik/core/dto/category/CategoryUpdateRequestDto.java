@@ -1,14 +1,19 @@
 package com.okancezik.core.dto.category;
 
-import com.okancezik.core.dto.product.ProductResponseDto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-import java.util.List;
 import java.util.UUID;
 
 public record CategoryUpdateRequestDto(
+		@NotNull(message = "ID must not be null")
 		UUID id,
+		@NotBlank(message = "Name must not be blank")
+		@Size(max = 100, message = "Name must not exceed 100 characters")
 		String name,
-		String description,
-		List<ProductResponseDto> productList
+		@NotBlank(message = "Description must not be blank")
+		@Size(max = 255, message = "Description must not exceed 255 characters")
+		String description
 ) {
 }

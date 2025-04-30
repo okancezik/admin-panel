@@ -3,6 +3,7 @@ package com.okancezik.api;
 import com.okancezik.core.dto.product.ProductCreateRequest;
 import com.okancezik.core.dto.product.ProductResponseDto;
 import com.okancezik.core.dto.product.ProductUpdateRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +18,11 @@ import java.util.UUID;
 public interface ProductApi {
 	@PostMapping
 	ResponseEntity<ProductResponseDto> save(
-			@RequestBody ProductCreateRequest request);
+			@RequestBody @Valid ProductCreateRequest request);
 
 	@PutMapping
 	ResponseEntity<ProductResponseDto> update(
-			@RequestBody ProductUpdateRequest request
+			@RequestBody @Valid ProductUpdateRequest request
 	);
 
 	@DeleteMapping
