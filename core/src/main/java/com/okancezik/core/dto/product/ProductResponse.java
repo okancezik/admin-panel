@@ -10,6 +10,8 @@ public record ProductResponse(
 		String name,
 		String description,
 		double price,
-		int stock
+		int stock,
+		UUID categoryId,
+		String categoryName
 ) {
 }

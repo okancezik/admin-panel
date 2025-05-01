@@ -19,8 +19,6 @@ public record ProductUpdateRequest(
 		@Positive(message = "Price must be a positive number")
 		double price,
 		@Min(value = 0, message = "Stock must be greater than or equal to 0")
-		int stock,
-		@NotNull(message = "ID must not be null")
-		UUID categoryId
+		int stock
 ) {
 }

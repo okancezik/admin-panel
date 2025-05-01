@@ -39,20 +39,10 @@ public class ProductServiceImpl implements ProductService {
 	public void update(ProductUpdateRequest request) {
 		var existingProduct = productRepository.findById(request.id())
 				.orElseThrow(() -> new RuntimeException("Product not found"));
-		var categoryResponse = categoryService.findById(request.categoryId());
-		if (categoryResponse == null) {
-			throw new IllegalArgumentException("Category not found");
-		}
-		var category = Category.builder()
-				.id(categoryResponse.id())
-				.name(categoryResponse.name())
-				.description(categoryResponse.description())
-				.build();
 		existingProduct.setName(request.name());
 		existingProduct.setDescription(request.description());
 		existingProduct.setPrice(request.price());
 		existingProduct.setStock(request.stock());
-		existingProduct.setCategory(category);
 		productRepository.save(existingProduct);
 	}
 

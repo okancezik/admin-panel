@@ -30,6 +30,8 @@ public class MappingProduct {
 				.description(product.getDescription())
 				.price(product.getPrice())
 				.stock(product.getStock())
+				.categoryId(product.getCategory().getId())
+				.categoryName(product.getCategory().getName())
 				.build();
 	}
 }

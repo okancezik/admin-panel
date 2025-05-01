@@ -25,7 +25,7 @@ public interface ProductApi {
 			@RequestBody @Valid ProductUpdateRequest request
 	);
 
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	ResponseEntity<ProductResponse> delete(
 			@PathVariable UUID id
 	);
