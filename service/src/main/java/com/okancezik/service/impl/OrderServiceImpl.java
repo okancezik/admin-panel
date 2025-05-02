@@ -77,4 +77,9 @@ public class OrderServiceImpl implements OrderService {
 					.build();
 		}).toList();
 	}
+
+	@Override
+	public void delete(UUID id) {
+		repository.deleteById(id);
+	}
 }

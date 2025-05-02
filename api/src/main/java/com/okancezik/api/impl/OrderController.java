@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,5 +28,11 @@ public class OrderController implements OrderApi {
 	@Override
 	public ResponseEntity<List<OrderResponse>> findAll() {
 		return ResponseEntity.ok(service.findAll());
+	}
+
+	@Override
+	public ResponseEntity<OrderResponse> delete(UUID id) {
+		service.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }
