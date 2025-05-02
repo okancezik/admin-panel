@@ -35,7 +35,7 @@ public class CustomerController implements CustomerApi {
 	@Override
 	public ResponseEntity<CustomerUpdateRequest> delete(UUID id) {
 		service.delete(id);
-		return null;
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@Override
