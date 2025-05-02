@@ -46,6 +46,11 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	public Optional<Customer> findById(UUID uuid) {
+		return customerRepository.findById(uuid);
+	}
+
+	@Override
 	public void delete(UUID id) {
 		Optional<Customer> existCustomer = customerRepository.findById(id);
 		existCustomer.ifPresent(customerRepository::delete);

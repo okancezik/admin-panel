@@ -5,6 +5,7 @@ import com.okancezik.core.dto.product.ProductResponse;
 import com.okancezik.core.dto.product.ProductUpdateRequest;
 import com.okancezik.repository.data.ProductRepository;
 import com.okancezik.repository.entity.Category;
+import com.okancezik.repository.entity.Product;
 import com.okancezik.service.CategoryService;
 import com.okancezik.service.ProductService;
 import com.okancezik.service.util.MappingProduct;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -55,5 +57,15 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductResponse> findAll() {
 		var products = productRepository.findAll();
 		return products.stream().map(MappingProduct::toProductResponse).toList();
+	}
+
+	@Override
+	public List<Product> findByIds(List<UUID> ids) {
+		return productRepository.findAllById(ids);
+	}
+
+	@Override
+	public Optional<Product> findById(UUID id) {
+		return productRepository.findById(id);
 	}
 }
