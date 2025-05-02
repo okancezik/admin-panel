@@ -2,6 +2,8 @@ package com.okancezik.api;
 
 import com.okancezik.core.dto.order.OrderCreateRequest;
 import com.okancezik.core.dto.order.OrderResponse;
+import com.okancezik.core.dto.order.OrderUpdateRequest;
+
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,5 +22,10 @@ public interface OrderApi {
 	@DeleteMapping("/{id}")
 	ResponseEntity<OrderResponse> delete(
 			@PathVariable UUID id
+	);
+
+	@PutMapping
+	ResponseEntity<OrderResponse> update(
+			@RequestBody @Valid OrderUpdateRequest request
 	);
 }

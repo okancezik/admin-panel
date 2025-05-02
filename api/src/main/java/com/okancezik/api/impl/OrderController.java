@@ -3,6 +3,7 @@ package com.okancezik.api.impl;
 import com.okancezik.api.OrderApi;
 import com.okancezik.core.dto.order.OrderCreateRequest;
 import com.okancezik.core.dto.order.OrderResponse;
+import com.okancezik.core.dto.order.OrderUpdateRequest;
 import com.okancezik.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,12 @@ public class OrderController implements OrderApi {
 	@Override
 	public ResponseEntity<OrderResponse> delete(UUID id) {
 		service.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+
+	@Override
+	public ResponseEntity<OrderResponse> update(OrderUpdateRequest request) {
+		service.update(request);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }

@@ -3,6 +3,7 @@ package com.okancezik.service.impl;
 import com.okancezik.core.dto.order.OrderCreateRequest;
 import com.okancezik.core.dto.order.OrderItemResponse;
 import com.okancezik.core.dto.order.OrderResponse;
+import com.okancezik.core.dto.order.OrderUpdateRequest;
 import com.okancezik.repository.data.OrderRepository;
 import com.okancezik.repository.entity.Customer;
 import com.okancezik.repository.entity.Order;
@@ -14,6 +15,7 @@ import com.okancezik.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,6 +72,7 @@ public class OrderServiceImpl implements OrderService {
 					.sum();
 			return OrderResponse.builder()
 					.orderId(order.getId())
+					.customerId(customer.getId())
 					.customerEmail(customer.getEmail())
 					.customerName(customer.getFirstname() + ' ' + customer.getLastname())
 					.totalAmount(totalAmount)
@@ -81,5 +84,43 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void delete(UUID id) {
 		repository.deleteById(id);
+	}
+
+	@Override
+	public void update(OrderUpdateRequest request) {
+		Order order = repository.findById(request.id())
+				.orElseThrow(() -> new RuntimeException("Order not found"));
+		Customer customer = customerService.findById(request.customerId())
+				.orElseThrow(() -> new RuntimeException("Customer not found"));
+		order.setCustomer(customer);
+		List<OrderItem> updatedItems = new ArrayList<>();
+		for (var itemRequest : request.orderItems()) {
+			Product product = productService.findById(itemRequest.productId())
+					.orElseThrow(() -> new RuntimeException("Product not found"));
+			if (product.getStock() < itemRequest.quantity()) {
+				throw new RuntimeException("Product out of stock: " + product.getName());
+			}
+			OrderItem existingItem = order.getOrderItems().stream()
+					.filter(item -> item.getProduct().getId().equals(product.getId()))
+					.findFirst()
+					.orElse(null);
+			if (existingItem != null) {
+				existingItem.setQuantity(itemRequest.quantity());
+				updatedItems.add(existingItem);
+			} else {
+				OrderItem newItem = OrderItem.builder()
+						.id(UUID.randomUUID())
+						.order(order)
+						.product(product)
+						.quantity(itemRequest.quantity())
+						.build();
+				updatedItems.add(newItem);
+			}
+		}
+		List<OrderItem> currentItems = new ArrayList<>(order.getOrderItems());
+		currentItems.removeIf(item -> !updatedItems.contains(item));
+		order.getOrderItems().removeAll(currentItems);
+		order.getOrderItems().addAll(updatedItems);
+		repository.save(order);
 	}
 }

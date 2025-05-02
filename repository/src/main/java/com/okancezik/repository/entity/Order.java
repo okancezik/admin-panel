@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,5 +35,6 @@ public class Order {
 			mappedBy = "order",
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
-	private List<OrderItem> orderItems;
+	@Builder.Default
+	private List<OrderItem> orderItems = new ArrayList<>();
 }
