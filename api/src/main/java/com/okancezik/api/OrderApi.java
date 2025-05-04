@@ -28,4 +28,8 @@ public interface OrderApi {
 	ResponseEntity<OrderResponse> update(
 			@RequestBody @Valid OrderUpdateRequest request
 	);
+
+	@GetMapping("/{id}")
+	ResponseEntity<List<OrderResponse>> findByCustomerId(
+			@PathVariable UUID id);
 }

@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 							item.getProduct().getPrice() * item.getQuantity())
 					.sum();
 			return OrderResponse.builder()
-					.orderId(order.getId())
+					.id(order.getId())
 					.customerId(customer.getId())
 					.customerEmail(customer.getEmail())
 					.customerName(customer.getFirstname() + ' ' + customer.getLastname())
@@ -122,5 +122,33 @@ public class OrderServiceImpl implements OrderService {
 		order.getOrderItems().removeAll(currentItems);
 		order.getOrderItems().addAll(updatedItems);
 		repository.save(order);
+	}
+
+	@Override
+	public List<OrderResponse> findByCustomerId(UUID id) {
+		List<Order> orders = repository.findByCustomerId(id);
+		return orders.stream().map(order -> {
+			Customer customer = order.getCustomer();
+			List<OrderItem> items = order.getOrderItems();
+			var orderItems = items.stream().map(i ->
+					OrderItemResponse.builder()
+							.productName(i.getProduct().getName())
+							.quantity(i.getQuantity())
+							.productId(i.getProduct().getId())
+							.price(i.getProduct().getPrice())
+							.build()).toList();
+			var totalAmount = items.stream()
+					.mapToDouble(item ->
+							item.getProduct().getPrice() * item.getQuantity())
+					.sum();
+			return OrderResponse.builder()
+					.id(order.getId())
+					.customerId(customer.getId())
+					.customerEmail(customer.getEmail())
+					.customerName(customer.getFirstname() + ' ' + customer.getLastname())
+					.totalAmount(totalAmount)
+					.items(orderItems)
+					.build();
+		}).toList();
 	}
 }

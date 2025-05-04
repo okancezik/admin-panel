@@ -42,4 +42,9 @@ public class OrderController implements OrderApi {
 		service.update(request);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
+
+	@Override
+	public ResponseEntity<List<OrderResponse>> findByCustomerId(UUID id) {
+		return ResponseEntity.ok(service.findByCustomerId(id));
+	}
 }

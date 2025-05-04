@@ -7,11 +7,10 @@ import java.util.UUID;
 
 @Builder
 public record OrderResponse(
-		UUID orderId,
+		UUID id,
 		UUID customerId,
 		String customerName,
 		String customerEmail,
-		//LocalDate orderDate,
 		List<OrderItemResponse> items,
 		Double totalAmount
 ) {

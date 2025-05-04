@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -24,6 +23,4 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = false, referencedColumnName = "id")
 	private Category    category;
-	/*@ManyToMany(mappedBy = "products")
-	private List<Order> orders;*/
 }

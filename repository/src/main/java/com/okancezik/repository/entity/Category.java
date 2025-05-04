@@ -14,8 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Category {
 	@Id
-	private UUID id;
-	private String name;
+	private UUID          id;
+	private String        name;
 	private String        description;
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Product> productList;

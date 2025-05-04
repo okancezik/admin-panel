@@ -4,12 +4,14 @@ import com.okancezik.core.dto.category.CategoryCreateRequest;
 import com.okancezik.core.dto.category.CategoryResponse;
 import com.okancezik.core.dto.category.CategoryUpdateRequest;
 import com.okancezik.repository.data.CategoryRepository;
+import com.okancezik.repository.entity.Category;
 import com.okancezik.service.CategoryService;
 import com.okancezik.service.util.MappingCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -45,6 +47,11 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryRepository.findById(id)
 				.map(MappingCategory::toCategoryResponse)
 				.orElse(null);
+	}
+
+	@Override
+	public Optional<Category> findCategoryById(UUID id) {
+		return categoryRepository.findById(id);
 	}
 
 	@Override

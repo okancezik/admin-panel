@@ -15,6 +15,6 @@ public interface OrderService {
 	void delete(UUID id);
 
 	void update(OrderUpdateRequest request);
-	/*Order findById(UUID id);
-	void deleteById(UUID id);*/
+
+	List<OrderResponse> findByCustomerId(UUID id);
 }

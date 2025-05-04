@@ -45,6 +45,9 @@ public class ProductServiceImpl implements ProductService {
 		existingProduct.setDescription(request.description());
 		existingProduct.setPrice(request.price());
 		existingProduct.setStock(request.stock());
+		UUID categoryId = request.categoryId();
+		Optional<Category> category = categoryService.findCategoryById(categoryId);
+		existingProduct.setCategory(category.orElseThrow(() -> new RuntimeException("Category not found")));
 		productRepository.save(existingProduct);
 	}
 
