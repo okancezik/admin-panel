@@ -30,6 +30,9 @@ public class MappingCustomer {
 				.email(request.email())
 				.phone(request.phone())
 				.address(request.address())
+				.password(request.password())
+				.againPassword(request.againPassword())
+				.isPrivacyPolicy(true)
 				.build();
 	}
 }

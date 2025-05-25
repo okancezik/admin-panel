@@ -13,6 +13,10 @@ public record CustomerCreateRequest(
 		String email,
 		@NotBlank(message = "Phone is required field")
 		String phone,
+		@NotBlank(message = "Password is required field")
+		String password,
+		@NotBlank(message = "Password is required field")
+		String againPassword,
 		@NotBlank(message = "Address is required field")
 		String address
 ) {

@@ -1,8 +1,10 @@
 package com.okancezik.service;
 
 import com.okancezik.core.dto.customer.CustomerCreateRequest;
+import com.okancezik.core.dto.customer.CustomerLoginRequest;
 import com.okancezik.core.dto.customer.CustomerResponse;
 import com.okancezik.core.dto.customer.CustomerUpdateRequest;
+import com.okancezik.core.dto.customer.auth.AuthResponse;
 import com.okancezik.repository.entity.Customer;
 
 import java.util.List;
@@ -19,4 +21,6 @@ public interface CustomerService {
 	List<CustomerResponse> findAll();
 
 	Optional<Customer> findById(UUID uuid);
+
+	AuthResponse login(CustomerLoginRequest request);
 }
