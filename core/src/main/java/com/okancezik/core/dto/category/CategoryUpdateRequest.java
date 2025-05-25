@@ -14,6 +14,8 @@ public record CategoryUpdateRequest(
 		String name,
 		@NotBlank(message = "Description must not be blank")
 		@Size(max = 255, message = "Description must not exceed 255 characters")
-		String description
+		String description,
+		@NotBlank(message = "Category's image is required field")
+		String image
 ) {
 }

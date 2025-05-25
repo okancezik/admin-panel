@@ -17,6 +17,7 @@ public class MappingCategory {
 				.id(UUID.randomUUID())
 				.name(request.name())
 				.description(request.description())
+				.image(request.image())
 				.productList(List.of())
 				.build();
 	}
@@ -26,6 +27,7 @@ public class MappingCategory {
 				.id(category.getId())
 				.name(category.getName())
 				.description(category.getDescription())
+				.image(category.getImage())
 				.productList(category.getProductList().stream()
 						.map(MappingProduct::toProductResponse).toList())
 				.build();

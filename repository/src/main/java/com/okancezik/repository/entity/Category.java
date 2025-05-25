@@ -17,6 +17,7 @@ public class Category {
 	private UUID          id;
 	private String        name;
 	private String        description;
+	private String   image;
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Product> productList;
 }

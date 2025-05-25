@@ -8,6 +8,8 @@ public record CategoryCreateRequest(
 		@NotBlank(message = "Name is required field")
 		String name,
 		@NotBlank(message = "Description is required field")
-		String description
+		String description,
+		@NotBlank(message = "Category's image is required field")
+		String image
 ) {
 }
