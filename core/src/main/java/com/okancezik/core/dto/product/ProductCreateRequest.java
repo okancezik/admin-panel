@@ -18,6 +18,8 @@ public record ProductCreateRequest(
 		double price,
 		@Min(value = 0, message = "Stock must be greater than or equal to 0")
 		int stock,
+		@NotBlank(message = "Image is required field")
+		String image,
 		@NotNull(message = "ID must not be null")
 		UUID categoryId
 ) {

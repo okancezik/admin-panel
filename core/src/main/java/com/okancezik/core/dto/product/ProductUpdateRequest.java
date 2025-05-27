@@ -16,6 +16,8 @@ public record ProductUpdateRequest(
 		String name,
 		@NotBlank(message = "Description is required field")
 		String description,
+		@NotBlank(message = "Image is required field")
+		String image,
 		@Positive(message = "Price must be a positive number")
 		double price,
 		@Min(value = 0, message = "Stock must be greater than or equal to 0")

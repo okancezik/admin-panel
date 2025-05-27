@@ -19,6 +19,7 @@ public class MappingProduct {
 				.description(request.description())
 				.price(request.price())
 				.stock(request.stock())
+				.image(request.image())
 				.category(category)
 				.build();
 	}
@@ -30,6 +31,7 @@ public class MappingProduct {
 				.description(product.getDescription())
 				.price(product.getPrice())
 				.stock(product.getStock())
+				.image(product.getImage())
 				.categoryId(product.getCategory().getId())
 				.categoryName(product.getCategory().getName())
 				.build();

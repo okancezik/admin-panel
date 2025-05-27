@@ -43,4 +43,8 @@ public class CategoryController implements CategoryApi {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
+	@Override
+	public ResponseEntity<CategoryResponse> getById(UUID id) {
+		return ResponseEntity.ok(categoryService.findById(id));
+	}
 }

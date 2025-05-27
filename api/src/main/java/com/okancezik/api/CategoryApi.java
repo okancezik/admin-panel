@@ -31,4 +31,9 @@ public interface CategoryApi {
 	@DeleteMapping("/{id}")
 	ResponseEntity<CategoryResponse> delete(
 			@PathVariable UUID id);
+
+	@GetMapping("/{id}")
+	ResponseEntity<CategoryResponse> getById(
+			@PathVariable UUID id
+	);
 }

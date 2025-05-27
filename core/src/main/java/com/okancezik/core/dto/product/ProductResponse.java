@@ -12,6 +12,7 @@ public record ProductResponse(
 		double price,
 		int stock,
 		UUID categoryId,
+		String image,
 		String categoryName
 ) {
 }

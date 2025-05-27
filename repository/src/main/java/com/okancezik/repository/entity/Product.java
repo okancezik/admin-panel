@@ -15,12 +15,13 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Product {
 	@Id
-	private UUID        id;
-	private String      name;
-	private String      description;
-	private double      price;
-	private int         stock;
+	private UUID     id;
+	private String   name;
+	private String   description;
+	private double   price;
+	private int      stock;
+	private String   image;
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = false, referencedColumnName = "id")
-	private Category    category;
+	private Category category;
 }
